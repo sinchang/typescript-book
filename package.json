@@ -11,7 +11,7 @@
   "idoc": {
     "dir": ".",
     "site": "The Concise TypeScript Book",
-    "openSource": "https://github.com/sinchang/typescript-book,
+    "openSource": "https://github.com/sinchang/typescript-book",
     "menus": {
       "Chinese Translations": "README-zh_CN.html"
     }
