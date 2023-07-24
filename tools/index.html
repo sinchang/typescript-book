@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tools The Concise TypeScript Book</title>
-    <meta name="description" content="These are tools for working with Markdown books.">
+    <title>Tools for Working with Markdown Books The Concise TypeScript Book</title>
+    <meta name="description" content="If you&#x27;re working with Markdown books, here are some essential tools and commands to help you streamline your workflow.">
     <link rel="stylesheet" type="text/css" href="../css/main.css?v=1.26.6">
     <link rel="stylesheet" type="text/css" href="../css/tocbot.css?v=1.26.6">
     <link rel="stylesheet" type="text/css" href="../css/media.css?v=1.26.6">
@@ -31,25 +31,60 @@
         </div>
       </article>
     </header>
-    <div class="warpper-content warpper notocs">
+    <div class="warpper-content warpper">
       <markdown-style>
-        <h1 id="tools"><a aria-hidden="true" tabindex="-1" href="#tools" class="anchor"><span class="icon icon-link"></span></a>Tools</h1>
-        <p>These are tools for working with Markdown books.</p>
-        <p>To install, use <code>nvm use</code> and <code>npm i</code>.</p>
-        <p>To format all TypeScript snippets using Prettier, use <code>npm run format</code>.</p>
-        <p>To compile snippets using TypeScript, use <code>npm run compile</code>.</p>
-        <p>To lint the Markdown files, use <code>lint:md</code>.</p>
-        <p>To lint all Markdown files and apply Prettier formatting to all TypeScript snippets and compile them using TypeScript, use <code>npm run check</code>.</p>
-        <p>To mark snippets that you do not want to compile, use <code>&#x3C;!-- skip --></code> just before the TypeScript demarcation.</p>
-        <p>Generate epub file for English version:</p>
-        <pre class="language-shell"><code class="language-shell code-highlight"><span class="code-line line-number" line="1">pandoc <span class="token parameter variable">-o</span> downloads/typescript-book.epub <span class="token parameter variable">--metadata</span> <span class="token assign-left variable">title</span><span class="token operator">=</span><span class="token string">"The Concise TypeScript Book"</span> <span class="token parameter variable">--metadata</span> <span class="token assign-left variable">author</span><span class="token operator">=</span><span class="token string">"Simone Poggiali"</span>  <span class="token parameter variable">-s</span> README.md
-</span></code><input type="hidden" value="pandoc -o downloads/typescript-book.epub --metadata title=&#x22;The Concise TypeScript Book&#x22; --metadata author=&#x22;Simone Poggiali&#x22;  -s README.md
+        <h1 id="tools-for-working-with-markdown-books"><a aria-hidden="true" tabindex="-1" href="#tools-for-working-with-markdown-books" class="anchor"><span class="icon icon-link"></span></a>Tools for Working with Markdown Books</h1>
+        <p>If you're working with Markdown books, here are some essential tools and commands to help you streamline your workflow.</p>
+        <h2 id="installation"><a aria-hidden="true" tabindex="-1" href="#installation" class="anchor"><span class="icon icon-link"></span></a>Installation</h2>
+        <p>Before you begin, ensure you have Node.js installed. To set up the required dependencies, use the following commands:</p>
+        <pre class="language-shell"><code class="language-shell code-highlight"><span class="code-line line-number" line="1">nvm use
+</span><span class="code-line line-number" line="2"><span class="token function">npm</span> <span class="token function">install</span>
+</span></code><input type="hidden" value="nvm use
+npm install
 "><div onclick="copied(this)" class="copied"><svg class="octicon-copy" aria-hidden="true" viewBox="0 0 16 16" fill="currentColor" height="12" width="12"><path fill-rule="evenodd" d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z"></path><path fill-rule="evenodd" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z"></path></svg><svg class="octicon-check" aria-hidden="true" viewBox="0 0 16 16" fill="currentColor" height="12" width="12"><path fill-rule="evenodd" d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z"></path></svg></div></pre>
-        <p>Generate epub file for Chinese version:</p>
-        <pre class="language-shell"><code class="language-shell code-highlight"><span class="code-line line-number" line="1">pandoc <span class="token parameter variable">-o</span> downloads/typescript-book-zh_CN.epub <span class="token parameter variable">--metadata</span> <span class="token assign-left variable">title</span><span class="token operator">=</span><span class="token string">"# 简洁的TypeScript之书"</span> <span class="token parameter variable">--metadata</span> <span class="token assign-left variable">author</span><span class="token operator">=</span><span class="token string">"Simone Poggiali"</span>  <span class="token parameter variable">-s</span> README-zh_CN.md
-</span></code><input type="hidden" value="pandoc -o downloads/typescript-book-zh_CN.epub --metadata title=&#x22;# 简洁的TypeScript之书&#x22; --metadata author=&#x22;Simone Poggiali&#x22;  -s README-zh_CN.md
+        <h2 id="formatting"><a aria-hidden="true" tabindex="-1" href="#formatting" class="anchor"><span class="icon icon-link"></span></a>Formatting</h2>
+        <p>Consistent code formatting is crucial. To format all TypeScript snippets, we use Prettier. Execute the following command for formatting:</p>
+        <pre class="language-shell"><code class="language-shell code-highlight"><span class="code-line line-number" line="1"><span class="token function">npm</span> run <span class="token function">format</span>
+</span></code><input type="hidden" value="npm run format
 "><div onclick="copied(this)" class="copied"><svg class="octicon-copy" aria-hidden="true" viewBox="0 0 16 16" fill="currentColor" height="12" width="12"><path fill-rule="evenodd" d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z"></path><path fill-rule="evenodd" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z"></path></svg><svg class="octicon-check" aria-hidden="true" viewBox="0 0 16 16" fill="currentColor" height="12" width="12"><path fill-rule="evenodd" d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z"></path></svg></div></pre>
+        <h2 id="compilation"><a aria-hidden="true" tabindex="-1" href="#compilation" class="anchor"><span class="icon icon-link"></span></a>Compilation</h2>
+        <p>To compile TypeScript snippets within the Markdown files, utilize the following command:</p>
+        <pre class="language-shell"><code class="language-shell code-highlight"><span class="code-line line-number" line="1"><span class="token function">npm</span> run compile
+</span></code><input type="hidden" value="npm run compile
+"><div onclick="copied(this)" class="copied"><svg class="octicon-copy" aria-hidden="true" viewBox="0 0 16 16" fill="currentColor" height="12" width="12"><path fill-rule="evenodd" d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z"></path><path fill-rule="evenodd" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z"></path></svg><svg class="octicon-check" aria-hidden="true" viewBox="0 0 16 16" fill="currentColor" height="12" width="12"><path fill-rule="evenodd" d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z"></path></svg></div></pre>
+        <h2 id="linting"><a aria-hidden="true" tabindex="-1" href="#linting" class="anchor"><span class="icon icon-link"></span></a>Linting</h2>
+        <p>To ensure that your Markdown files adhere to proper formatting rules, use the linting command:</p>
+        <pre class="language-shell"><code class="language-shell code-highlight"><span class="code-line line-number" line="1"><span class="token function">npm</span> run lint:md
+</span></code><input type="hidden" value="npm run lint:md
+"><div onclick="copied(this)" class="copied"><svg class="octicon-copy" aria-hidden="true" viewBox="0 0 16 16" fill="currentColor" height="12" width="12"><path fill-rule="evenodd" d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z"></path><path fill-rule="evenodd" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z"></path></svg><svg class="octicon-check" aria-hidden="true" viewBox="0 0 16 16" fill="currentColor" height="12" width="12"><path fill-rule="evenodd" d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z"></path></svg></div></pre>
+        <h2 id="linting-and-formatting"><a aria-hidden="true" tabindex="-1" href="#linting-and-formatting" class="anchor"><span class="icon icon-link"></span></a>Linting and Formatting</h2>
+        <p>For a comprehensive process that includes linting all Markdown files, applying Prettier formatting to all TypeScript snippets, and compiling them using TypeScript, use the following command:</p>
+        <pre class="language-shell"><code class="language-shell code-highlight"><span class="code-line line-number" line="1"><span class="token function">npm</span> run check
+</span></code><input type="hidden" value="npm run check
+"><div onclick="copied(this)" class="copied"><svg class="octicon-copy" aria-hidden="true" viewBox="0 0 16 16" fill="currentColor" height="12" width="12"><path fill-rule="evenodd" d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z"></path><path fill-rule="evenodd" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z"></path></svg><svg class="octicon-check" aria-hidden="true" viewBox="0 0 16 16" fill="currentColor" height="12" width="12"><path fill-rule="evenodd" d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z"></path></svg></div></pre>
+        <h2 id="skipping-compilation"><a aria-hidden="true" tabindex="-1" href="#skipping-compilation" class="anchor"><span class="icon icon-link"></span></a>Skipping Compilation</h2>
+        <p>If you have specific snippets in the Markdown files that you don't want to compile, simply add <code>&#x3C;!-- skip --></code> just before the TypeScript demarcation for those snippets.</p>
+        <h2 id="epub-generation"><a aria-hidden="true" tabindex="-1" href="#epub-generation" class="anchor"><span class="icon icon-link"></span></a>Epub Generation</h2>
+        <p>To generate Epub files from your Markdown books, navigate to the `tools`` folder and run the following command:</p>
+        <pre class="language-shell"><code class="language-shell code-highlight"><span class="code-line line-number" line="1">make-books.sh
+</span></code><input type="hidden" value="make-books.sh
+"><div onclick="copied(this)" class="copied"><svg class="octicon-copy" aria-hidden="true" viewBox="0 0 16 16" fill="currentColor" height="12" width="12"><path fill-rule="evenodd" d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z"></path><path fill-rule="evenodd" d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z"></path></svg><svg class="octicon-check" aria-hidden="true" viewBox="0 0 16 16" fill="currentColor" height="12" width="12"><path fill-rule="evenodd" d="M13.78 4.22a.75.75 0 010 1.06l-7.25 7.25a.75.75 0 01-1.06 0L2.22 9.28a.75.75 0 011.06-1.06L6 10.94l6.72-6.72a.75.75 0 011.06 0z"></path></svg></div></pre>
+        <p>After generating the Epub files, thoroughly test them, and once you're satisfied with the results, commit the changes.</p>
+        <p>These tools will assist you in efficiently working with Markdown books and ensure a smooth and organized process. Happy writing!</p>
       </markdown-style>
+      <nav class="tocs">
+        <aside class="inner toc">
+          <ol class="tocs-list">
+            <li><a href="#installation" class="tocs-link">Installation</a></li>
+            <li><a href="#formatting" class="tocs-link">Formatting</a></li>
+            <li><a href="#compilation" class="tocs-link">Compilation</a></li>
+            <li><a href="#linting" class="tocs-link">Linting</a></li>
+            <li><a href="#linting-and-formatting" class="tocs-link">Linting and Formatting</a></li>
+            <li><a href="#skipping-compilation" class="tocs-link">Skipping Compilation</a></li>
+            <li><a href="#epub-generation" class="tocs-link">Epub Generation</a></li>
+          </ol>
+        </aside>
+      </nav>
     </div>
     <script src="../js/demo-preview.js?v=1.26.6"></script>
     <div class="footer warpper">The Concise TypeScript Book © 2023 by <a href="https://github.com/gibbok/typescript-book">Simone Poggiali</a> is licensed under Attribution 4.0 International.</div>
