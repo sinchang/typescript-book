@@ -1850,27 +1850,50 @@ console.log('EN' /* Language.English */);
 
 ### 反向映射
 
-在 TypeScript 中，枚举中的反向映射是指从值中检索枚举成员名称的能力。默认情况下，枚举成员具有从名称到值的正向映射，但可以通过为每个成员显式设置值来创建反向映射。当您需要按枚举成员的值查找枚举成员，或者需要迭代所有枚举成员时，反向映射非常有用。
+在 TypeScript 中，枚举中的反向映射是指从值中检索枚举成员名称的能力。默认情况下，枚举成员具有从名称到值的正向映射，但可以通过为每个成员显式设置值来创建反向映射。当您需要按枚举成员的值查找枚举成员，或者需要迭代所有枚举成员时，反向映射非常有用。需要注意的是，只有数字类型的枚举成员会生成反向映射，字符串类型的枚举成员则不会。
 
 以下枚举：
 
 ```typescript
-const enum Language {
-    English = 'EN',
-    Spanish = 'ES',
+enum Grade {
+    A = 90,
+    B = 80,
+    C = 70,
+    F = 'fail',
 }
-console.log(Language.English);
 ```
 
 编译为：
 
 <!-- skip -->
+```javascript
+'use strict';
+var Grade;
+(function (Grade) {
+    Grade[(Grade['A'] = 90)] = 'A';
+    Grade[(Grade['B'] = 80)] = 'B';
+    Grade[(Grade['C'] = 70)] = 'C';
+    Grade['F'] = 'fail';
+})(Grade || (Grade = {}));
+```
+
+由此可见，对数字类型的枚举成员，可以从枚举值映射回枚举名称，但对字符串类型的枚举成员无法这样做。
+
+<!-- skip -->
 ```typescript
-(function (Language) {
-    Language['English'] = 'EN';
-    Language['Spanish'] = 'ES';
-})(Language || (Language = {}));
-console.log(Language.English);
+enum Grade {
+    A = 90,
+    B = 80,
+    C = 70,
+    F = 'fail',
+}
+const myGrade = Grade.A;
+console.log(Grade[myGrade]); // A
+console.log(Grade[90]); // A
+
+const failGrade = Grade.F;
+console.log(failGrade); // fail
+console.log(Grade[failGrade]); // Element implicitly has an 'any' type because index expression is not of type 'number'.
 ```
 
 ### 环境枚举
@@ -4394,7 +4417,7 @@ Node.js 从 15.3.0 版本开始添加了对 ECMAScript 模块的支持，而 Typ
 }
 ```
 
-Node.js 支持两种模块文件扩展名：`.mjs` 的ES 模块和 `.cjs` 的CommonJS 模块。TypeScript 中的等效文件扩展名适用 `.mjs` 于 ES 模块和 `.js` 于CommonJS 模块。当 TypeScript 编译器将这些文件转译为 JavaScript 时，它将分别创建 `.mjs` 和 `.js` 文件。
+Node.js 支持两种模块文件扩展名：`.mjs` 的ES 模块和 `.cjs` 的CommonJS 模块。TypeScript 中的等效文件扩展名适用 `.mts` 于 ES 模块和 `.cts` 于CommonJS 模块。当 TypeScript 编译器将这些文件转译为 JavaScript 时，它将分别创建 `.mjs` 和 `.cjs` 文件。
 
 如果您想在项目中使用 ES 模块，可以type在 package.json 文件中将该属性设置为“module”。这指示 Node.js 将项目视为 ES 模块项目。
 

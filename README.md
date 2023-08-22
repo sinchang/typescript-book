@@ -1832,27 +1832,50 @@ Const enums have hardcoded values, erasing the enum, which can be more efficient
 
 ### Reverse mapping
 
-In TypeScript, reverse mappings in enums refer to the ability to retrieve the enum member name from its value. By default, enum members have forward mappings from name to value, but reverse mappings can be created by explicitly setting values for each member. Reverse mappings are useful when you need to look up an enum member by its value, or when you need to iterate over all the enum members.
+In TypeScript, reverse mappings in enums refer to the ability to retrieve the enum member name from its value. By default, enum members have forward mappings from name to value, but reverse mappings can be created by explicitly setting values for each member. Reverse mappings are useful when you need to look up an enum member by its value, or when you need to iterate over all the enum members. Note that only numeric enums members will generate reverse mappings, while string enum members *do not* get a reverse mapping generated at all.
 
 The following enum:
 
 ```typescript
-const enum Language {
-    English = 'EN',
-    Spanish = 'ES',
+enum Grade {
+    A = 90,
+    B = 80,
+    C = 70,
+    F = 'fail',
 }
-console.log(Language.English);
 ```
 
 Compiles to:
 
 <!-- skip -->
+```javascript
+'use strict';
+var Grade;
+(function (Grade) {
+    Grade[(Grade['A'] = 90)] = 'A';
+    Grade[(Grade['B'] = 80)] = 'B';
+    Grade[(Grade['C'] = 70)] = 'C';
+    Grade['F'] = 'fail';
+})(Grade || (Grade = {}));
+```
+
+Therefore, mapping values to keys works for numeric enum members, but not for string enum members:
+
+<!-- skip -->
 ```typescript
-(function (Language) {
-    Language['English'] = 'EN';
-    Language['Spanish'] = 'ES';
-})(Language || (Language = {}));
-console.log(Language.English);
+enum Grade {
+    A = 90,
+    B = 80,
+    C = 70,
+    F = 'fail',
+}
+const myGrade = Grade.A;
+console.log(Grade[myGrade]); // A
+console.log(Grade[90]); // A
+
+const failGrade = Grade.F;
+console.log(failGrade); // fail
+console.log(Grade[failGrade]); // Element implicitly has an 'any' type because index expression is not of type 'number'.
 ```
 
 ### Ambient enums
@@ -4388,7 +4411,7 @@ Node.js added support for ECMAScript Modules starting from version 15.3.0, and T
 }
 ```
 
-Node.js supports two file extensions for modules: `.mjs` for ES modules and `.cjs` for CommonJS modules. The equivalent file extensions in TypeScript are `.mjs` for ES modules and `.js` for CommonJS modules. When the TypeScript compiler transpiles these files to JavaScript, it will create `.mjs` and `.js` files, respectively.
+Node.js supports two file extensions for modules: `.mjs` for ES modules and `.cjs` for CommonJS modules. The equivalent file extensions in TypeScript are `.mts` for ES modules and `.cts` for CommonJS modules. When the TypeScript compiler transpiles these files to JavaScript, it will create `.mjs` and `.cjs` files.
 
 If you want to use ES modules in your project, you can set the `type` property to "module" in your package.json file. This instructs Node.js to treat the project as an ES module project.
 
