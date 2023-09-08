@@ -110,7 +110,8 @@ You can also download the Epub version here:
   - [The never type](#the-never-type)
   - [Exhaustiveness checking](#exhaustiveness-checking)
   - [Object Types](#object-types)
-  - [Tuple Type](#tuple-type)
+  - [Tuple Type (anonymous)](#tuple-type-anonymous)
+  - [Named Tuple Type](#named-tuple-type)
   - [Fixed length tuple](#fixed-length-tuple)
   - [Union Type](#union-type)
   - [Intersection Types](#intersection-types)
@@ -118,7 +119,8 @@ You can also download the Epub version here:
   - [Type from Value](#type-from-value)
   - [Type from Func Return](#type-from-func-return)
   - [Type from Module](#type-from-module)
-  - [Mapped types](#mapped-types)
+  - [Mapped Types](#mapped-types)
+  - [Mapped Type Modifiers](#mapped-type-modifiers)
   - [Conditional Types](#conditional-types)
   - [Distributive conditional types](#distributive-conditional-types)
   - [“infer” Type inference in conditional types](#infer-type-inference-in-conditional-types)
@@ -212,6 +214,7 @@ You can also download the Epub version here:
     - [Nullish coalescing operator (??)](#nullish-coalescing-operator-)
     - [Template Literal Types](#template-literal-types)
     - [Function overloading](#function-overloading)
+    - [Recursive Types](#recursive-types)
     - [Recursive Conditional Types](#recursive-conditional-types)
     - [ECMAScript Module Support in Node.js](#ecmascript-module-support-in-nodejs)
     - [Assertion Functions](#assertion-functions)
@@ -222,6 +225,7 @@ You can also download the Epub version here:
       - [Optional Variance Annotations for Type Parameters](#optional-variance-annotations-for-type-parameters)
     - [Symbol and Template String Pattern Index Signatures](#symbol-and-template-string-pattern-index-signatures)
     - [The satisfies Operator](#the-satisfies-operator)
+    - [Type-Only Imports and Export](#type-only-imports-and-export)
 <!-- markdownlint-enable MD004 -->
 ## Introduction
 
@@ -2213,12 +2217,23 @@ const sum = (x: { a: number; b: number }) => x.a + x.b;
 console.log(sum({ a: 5, b: 1 }));
 ```
 
-## Tuple Type
+## Tuple Type (anonymous)
 
 A Tuple Type is a type that represents an array with a fixed number of elements and their corresponding types. A tuple type enforces a specific number of elements and their respective types in a fixed order. Tuple types are useful when you want to represent a collection of values with specific types, where the position of each element in the array has a specific meaning.
 
 ```typescript
 type Point = [number, number];
+```
+
+## Named Tuple Type
+
+Tuple types can include optional labels or names for each element. These labels are for readability and tooling assistance, and do not affect the operations you can perform with them.
+
+```typescript
+type T = string;
+type Tuple1 = [T, T];
+type Tuple2 = [a: T, b: T];
+type Tuple3 = [a: T, T]; // Named Tuple plus Anonymous Tuple
 ```
 
 ## Fixed length tuple
@@ -2305,9 +2320,9 @@ import { add } from 'calc';
 const r = add(1, 2); // r is number
 ```
 
-## Mapped types
+## Mapped Types
 
-Mapped types in TypeScript allow you to create new types based on an existing type by transforming each property using a mapping function. By mapping existing types, you can create new types that represent the same information in a different format. To create a mapped type, you access the properties of an existing type using the `keyof` operator and then alter them to produce a new type.
+Mapped Types in TypeScript allow you to create new types based on an existing type by transforming each property using a mapping function. By mapping existing types, you can create new types that represent the same information in a different format. To create a mapped type, you access the properties of an existing type using the `keyof` operator and then alter them to produce a new type.
 In the following example:
 
 ```typescript
@@ -2326,6 +2341,24 @@ const x: MyNewType = {
 ```
 
 we define MyMappedType to map over T's properties, creating a new type with each property as an array of its original type. Using this, we create MyNewType to represent the same info as MyType, but with each property as an array.
+
+## Mapped Type Modifiers
+
+Mapped Type Modifiers in TypeScript enable the transformation of properties within an existing type:
+
+* `readonly` or `+readonly`: This renders a property in the mapped type as read-only.
+* `-readonly`: This allows a property in the mapped type to be mutable.
+* `?`: This designates a property in the mapped type as optional.
+
+Examples:
+
+```typescript
+type ReadOnly<T> = { readonly [P in keyof T]: T[P] }; // all properties marked as read-only
+
+type Mutable<T> = { -readonly [P in keyof T]: T[P] }; // all properties marked as mutable
+
+type MyPartial<T> = { [P in keyof T]?: T[P] }; // all properties marked as optional
+```
 
 ## Conditional Types
 
@@ -4361,6 +4394,17 @@ makeGreeting('Simon');
 makeGreeting(['Simone', 'John']);
 ```
 
+### Recursive Types
+
+A Recursive Type is a type that can refer to itself. This is useful for defining data structures that have a hierarchical or recursive structure (potentially infinite nesting), such as linked lists, trees, and graphs.
+
+```typescript
+type ListNode<T> = {
+    data: T;
+    next: ListNode<T> | undefined;
+};
+```
+
 ### Recursive Conditional Types
 
 It is possible to define complex type relationships using logic and recursion in TypeScript.
@@ -4532,7 +4576,7 @@ The boxed types are usually not needed. Avoid using boxed types and instead use 
 
 ### Key Remapping in Mapped Types
 
-Mapped types allow you to create new types by transforming the properties of an existing type. Using the `keyof` and `in` keywords, you can iterate over the properties of a type and define modifications, such as making them optional or readonly. Here an example:
+Mapped Types allow you to create new types by transforming the properties of an existing type. Using the `keyof` and `in` keywords, you can iterate over the properties of a type and define modifications, such as making them optional or readonly. Here an example:
 
 ```typescript
 type Person = {
@@ -4691,4 +4735,30 @@ const user3 = {
 
 user3.attributes?.map(console.log); // TypeScript infers correctly: string[]
 user3.nickName; // TypeScript infers correctly: undefined
+```
+
+### Type-Only Imports and Export
+
+Type-Only Imports and Export allows you to import or export types without importing or exporting the values or functions associated with those types. This can be useful for reducing the size of your bundle.
+
+To use type-only imports, you can use the `import type keyword`.
+
+TypeScript permits using both declaration and implementation file extensions (.ts, .mts, .cts, and .tsx) in type-only imports, regardless of `allowImportingTsExtensions` settings.
+
+For example:
+
+<!-- skip -->
+```typescript
+import type { House } from './house.ts';
+```
+
+The following are supported forms:
+
+<!-- skip -->
+```typescript
+import type T from './mod';
+import type { A, B } from './mod';
+import type * as Types from './mod';
+export type { T };
+export type { T } from './mod';
 ```

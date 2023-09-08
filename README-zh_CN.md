@@ -105,7 +105,8 @@
   - [never 类型](#never-类型)
   - [详尽性检查](#详尽性检查)
   - [对象类型](#对象类型)
-  - [元组类型](#元组类型)
+  - [元组类型（匿名）](#元组类型匿名)
+  - [命名元组类型](#命名元组类型)
   - [固定长度元组](#固定长度元组)
   - [联合类型](#联合类型)
   - [交集类型](#交集类型)
@@ -114,6 +115,7 @@
   - [Func 返回值的类型](#func-返回值的类型)
   - [模块的类型](#模块的类型)
   - [映射类型](#映射类型)
+  - [映射类型修饰符](#映射类型修饰符)
   - [条件类型](#条件类型)
   - [分配条件类型](#分配条件类型)
   - [“infer” 条件类型中的类型推断](#infer-条件类型中的类型推断)
@@ -208,6 +210,7 @@
     - [空合并运算符 (??)](#空合并运算符-)
     - [模板字符串类型](#模板字符串类型)
     - [函数重载](#函数重载)
+    - [递归类型](#递归类型)
     - [递归条件类型](#递归条件类型)
     - [Node.js 中的 ECMAScript 模块支持](#nodejs-中的-ecmascript-模块支持)
     - [断言函数](#断言函数)
@@ -218,6 +221,7 @@
       - [类型参数的可选方差注释](#类型参数的可选方差注释)
     - [Symbol和模板字符串模式索引签名](#symbol和模板字符串模式索引签名)
     - [satisfies操作符](#satisfies操作符)
+    - [仅类型导入和导出](#仅类型导入和导出)
 <!-- markdownlint-enable MD004 -->
 
 ## 介绍
@@ -2231,12 +2235,23 @@ const sum = (x: { a: number; b: number }) => x.a + x.b;
 console.log(sum({ a: 5, b: 1 }));
 ```
 
-## 元组类型
+## 元组类型（匿名）
 
 元组类型是一种表示具有固定数量的元素及其相应类型的数组的类型。元组类型以固定顺序强制执行特定数量的元素及其各自的类型。当您想要表示具有特定类型的值的集合时，元组类型非常有用，其中数组中每个元素的位置都有特定的含义。
 
 ```typescript
 type Point = [number, number];
+```
+
+## 命名元组类型
+
+元组类型可以包含每个元素的可选标签或名称。 这些标签用于提高可读性和工具帮助，不会影响您可以使用它们执行的操作。
+
+```typescript
+type T = string;
+type Tuple1 = [T, T];
+type Tuple2 = [a: T, b: T];
+type Tuple3 = [a: T, T]; // 命名元组加匿名元组
 ```
 
 ## 固定长度元组
@@ -2342,6 +2357,24 @@ const x: MyNewType = {
 ```
 
 我们定义 MyMappedType 来映射 T 的属性，创建一个新类型，其中每个属性都是其原始类型的数组。使用它，我们创建 MyNewType 来表示与 MyType 相同的信息，但每个属性都是一个数组。
+
+## 映射类型修饰符
+
+TypeScript 中的映射类型修饰符支持对现有类型中的属性进行转换：
+
+* `readonly` 或 `+readonly`：这会将映射类型中的属性呈现为只读。
+* `-readonly`：这允许映射类型中的属性是可变的。
+* `?`：这将映射类型中的属性指定为可选。
+
+例子：
+
+```typescript
+type ReadOnly<T> = { readonly [P in keyof T]: T[P] }; // 所有属性标记为只读
+
+type Mutable<T> = { -readonly [P in keyof T]: T[P] }; // 所有标记为可变的属性
+
+type MyPartial<T> = { [P in keyof T]?: T[P] }; // 所有标记为可选的属性
+````
 
 ## 条件类型
 
@@ -4368,6 +4401,17 @@ makeGreeting('Simon');
 makeGreeting(['Simone', 'John']);
 ```
 
+### 递归类型
+
+递归类型是可以引用自身的类型。 这对于定义具有分层或递归结构（可能无限嵌套）的数据结构非常有用，例如链表、树和图。
+
+```typescript
+type ListNode<T> = {
+    data: T;
+    next: ListNode<T> | undefined;
+};
+```
+
 ### 递归条件类型
 
 可以使用 TypeScript 中的逻辑和递归来定义复杂的类型关系。让我们简单地分解一下：
@@ -4701,4 +4745,30 @@ const user3 = {
 
 user3.attributes?.map(console.log); // TypeScript 推断正确: string[]
 user3.nickName; // TypeScript 推断正确: undefined
+```
+
+### 仅类型导入和导出
+
+仅类型导入和导出允许您导入或导出类型，而无需导入或导出与这些类型关联的值或函数。 这对于减小捆绑包的大小很有用。
+
+要使用仅类型导入，您可以使用“导入类型关键字”。
+
+TypeScript 允许在仅类型导入中使用声明和实现文件扩展名（.ts、.mts、.cts 和 .tsx），无论“allowImportingTsExtensions”设置如何。
+
+例如：
+
+<!-- skip -->
+```typescript
+import type { House } from './house.ts';
+```
+
+以下是支持的形式：
+
+<!-- skip -->
+```typescript
+import type T from './mod';
+import type { A, B } from './mod';
+import type * as Types from './mod';
+export type { T };
+export type { T } from './mod';
 ```
