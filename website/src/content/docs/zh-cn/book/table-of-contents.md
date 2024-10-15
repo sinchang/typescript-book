@@ -9,7 +9,7 @@ sidebar:
 <!-- markdownlint-disable MD004 -->
 - 简洁的TypeScript之书
   - 翻译
-  - 下载
+  - 下载和网站
   - 目录表
   - 介绍
   - 关于作者
@@ -22,7 +22,7 @@ sidebar:
   - TypeScript 入门
     - 安装
     - 配置
-    - TypeScript 的配置文件 tsconfig.json
+    - TypeScript 的配置文件
       - target
       - lib
       - strict
@@ -183,6 +183,7 @@ sidebar:
       - Lowercase\<T\>
       - Capitalize\<T\>
       - Uncapitalize\<T\>
+      - NoInfer\<T\>
   - 其他
     - 错误和异常处理
     - 混合类
@@ -194,17 +195,17 @@ sidebar:
     - ES6 模块
     - ES7 求幂运算符
     - for-await-of 语句
-    - New.target
+    - New target 元属性
     - 动态导入表达式
     - "tsc –watch"
     - 默认声明
     - 可选链
-    - 空合并运算符 (??)
+    - 空合并运算符
     - 模板字符串类型
     - 函数重载
     - 递归类型
     - 递归条件类型
-    - Node.js 中的 ECMAScript 模块支持
+    - Node 中的 ECMAScript 模块支持
     - 断言函数
     - 可变参数元组类型
     - 装箱类型
@@ -215,5 +216,6 @@ sidebar:
     - 仅类型导入和导出
     - 使用声明和显式资源管理
       - 使用声明等待
+    - 导入属性
 <!-- markdownlint-enable MD004 -->
 

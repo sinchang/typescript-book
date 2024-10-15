@@ -4,24 +4,32 @@
 
 本书完全免费且开源。
 
+如果您发现这本 TypeScript 书籍很有价值并希望做出贡献，请考虑通过 PayPal 支持我的努力。谢谢！
+
+[![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/donate/?business=QW82ZS956XLFY&no_recurring=0&currency_code=EUR)
+
 ## 翻译
 
 本书已被翻译成多种语言版本，包括：
 
-* [中文](https://github.com/gibbok/typescript-book/blob/main/README-zh_CN.md)
+[中文](https://github.com/gibbok/typescript-book/blob/main/README-zh_CN.md)
 
-## 下载
+## 下载和网站
 
-您还可以在这里下载 Epub 版本：
+您还可以下载 Epub 版本：
 
 [https://github.com/gibbok/typescript-book/tree/main/downloads](https://github.com/gibbok/typescript-book/tree/main/downloads)
+
+在线版本可在以下位置获得：
+
+[https://gibbok.github.io/typescript-book](https://gibbok.github.io/typescript-book)
 
 ## 目录表
 
 <!-- markdownlint-disable MD004 -->
 - [简洁的TypeScript之书](#简洁的typescript之书)
   - [翻译](#翻译)
-  - [下载](#下载)
+  - [下载和网站](#下载和网站)
   - [目录表](#目录表)
   - [介绍](#介绍)
   - [关于作者](#关于作者)
@@ -34,7 +42,7 @@
   - [TypeScript 入门](#typescript-入门)
     - [安装](#安装)
     - [配置](#配置)
-    - [TypeScript 的配置文件 tsconfig.json](#typescript-的配置文件-tsconfigjson)
+    - [TypeScript 的配置文件](#typescript-的配置文件)
       - [target](#target)
       - [lib](#lib)
       - [strict](#strict)
@@ -195,6 +203,7 @@
       - [Lowercase\<T\>](#lowercaset)
       - [Capitalize\<T\>](#capitalizet)
       - [Uncapitalize\<T\>](#uncapitalizet)
+      - [NoInfer\<T\>](#noinfert)
   - [其他](#其他)
     - [错误和异常处理](#错误和异常处理)
     - [混合类](#混合类)
@@ -206,17 +215,17 @@
     - [ES6 模块](#es6-模块)
     - [ES7 求幂运算符](#es7-求幂运算符)
     - [for-await-of 语句](#for-await-of-语句)
-    - [New.target](#newtarget)
+    - [New target 元属性](#new-target-元属性)
     - [动态导入表达式](#动态导入表达式)
     - ["tsc –watch"](#tsc-watch)
     - [默认声明](#默认声明)
     - [可选链](#可选链)
-    - [空合并运算符 (??)](#空合并运算符-)
+    - [空合并运算符](#空合并运算符)
     - [模板字符串类型](#模板字符串类型)
     - [函数重载](#函数重载)
     - [递归类型](#递归类型)
     - [递归条件类型](#递归条件类型)
-    - [Node.js 中的 ECMAScript 模块支持](#nodejs-中的-ecmascript-模块支持)
+    - [Node 中的 ECMAScript 模块支持](#node-中的-ecmascript-模块支持)
     - [断言函数](#断言函数)
     - [可变参数元组类型](#可变参数元组类型)
     - [装箱类型](#装箱类型)
@@ -227,6 +236,7 @@
     - [仅类型导入和导出](#仅类型导入和导出)
     - [使用声明和显式资源管理](#使用声明和显式资源管理)
       - [使用声明等待](#使用声明等待)
+    - [导入属性](#导入属性)
 <!-- markdownlint-enable MD004 -->
 
 ## 介绍
@@ -243,7 +253,7 @@ Simone Poggiali 是一位经验丰富的高级前端开发人员，自 90 年代
 
 * 领英: [https://www.linkedin.com/in/simone-poggiali](https://www.linkedin.com/in/simone-poggiali)
 * GitHub: [https://github.com/gibbok](https://github.com/gibbok)
-* 推特: [https://twitter.com/gibbok_coding](https://twitter.com/gibbok_coding)
+* X.com: [https://x.com/gibbok_coding](https://x.com/gibbok_coding)
 * 电子邮箱: gibbok.coding📧gmail.com
 
 ## TypeScript简介
@@ -252,7 +262,7 @@ Simone Poggiali 是一位经验丰富的高级前端开发人员，自 90 年代
 
 TypeScript 是一种基于 JavaScript 构建的强类型编程语言。它最初由 Anders Hejlsberg 于 2012 年设计，目前由 Microsoft 作为开源项目开发和维护。
 
-TypeScript 编译为 JavaScript，并且可以在任何 JavaScript 引擎（例如浏览器或服务器 Node.js）中执行。
+TypeScript 编译为 JavaScript，并且可以在任何 JavaScript 运行时（例如浏览器或服务器 Node.js）中执行。
 
 TypeScript 支持多种编程范式，例如函数式、泛型、命令式和面向对象。TypeScript 既不是解释型语言，也不是编译型语言。
 
@@ -284,7 +294,7 @@ TypeScript是用`.ts`或`.tsx`文件编写的, 而JavaScript是用`.js`或`.jsx`
 const sum = (a, b) => a + b;
 ```
 
-该函数可以通过将文件扩展名更改为 .TypeScript 来转换和使用.ts。但是，如果同一个函数使用 TypeScript 类型进行注释，则未经编译就无法在任何 JavaScript 引擎中执行。如果未编译以下 TypeScript 代码，将会产生语法错误
+该函数可以通过将文件扩展名更改为 .TypeScript 来转换和使用.ts。但是，如果同一个函数使用 TypeScript 类型进行注释，则未经编译就无法在任何 JavaScript 运行时中执行。如果未编译以下 TypeScript 代码，将会产生语法错误
 
 <!-- skip -->
 ```typescript
@@ -328,7 +338,7 @@ const result = 1 + true; // 在JavaScript中, 结果等于2
 
 ### TypeScript 代码生成
 
-TypeScript 编译器有两个主要职责：检查类型错误和编译为 JavaScript。这两个过程是相互独立的。类型不会影响 JavaScript 引擎中代码的执行，因为它们在编译过程中会被完全擦除。即使存在类型错误，TypeScript 仍然可以输出 JavaScript。以下是存在类型错误的 TypeScript 代码示例：
+TypeScript 编译器有两个主要职责：检查类型错误和编译为 JavaScript。这两个过程是相互独立的。类型不会影响 JavaScript 运行时中代码的执行，因为它们在编译过程中会被完全擦除。即使存在类型错误，TypeScript 仍然可以输出 JavaScript。以下是存在类型错误的 TypeScript 代码示例：
 
 <!-- skip -->
 ```typescript
@@ -523,7 +533,7 @@ tsc src/*.ts // 将 'src' 文件夹下任意的 .ts 文件编译成 JavaScript
 tsc app.ts util.ts --outfile index.js // 将 2 个 TypeScript 文件 (app.ts 和 util.ts) 编译成 1 个 JavaScript 文件 (index.js)
 ```
 
-### TypeScript 的配置文件 tsconfig.json
+### TypeScript 的配置文件
 
 tsconfig.json 文件用于配置 TypeScript 编译器 (tsc)。通常，它与文件一起添加到项目的根目录中package.json。
 
@@ -590,6 +600,7 @@ TypeScript 可以为各种模块系统生成代码，包括 UMD、System、ESNex
 <!-- markdownlint-disable MD049 -->
 "include"属性向编译器指示我们想要包含的文件列表。此属性允许类似 glob 的模式，例如 "\*_" 表示任何子目录，"_" 表示任何文件名，"?" 表示可选字符。
 <!-- markdownlint-enable MD049 -->
+
 #### exclude
 
 "exclude"属性向编译器指示不应包含在编译中的文件列表。这可以包括"node_modules"等文件或测试文件
@@ -1128,6 +1139,8 @@ npm install --save-dev @types/library-name
 ```
 
 即使在 JavaScript 文件中，您也可以通过 `// @ts-check` 使用环境声明。
+
+`declare` 关键字可以为现有的 JavaScript 代码启用类型定义，而无需导入它，作为来自另一个文件或全局的类型的占位符。
 
 ### 属性检测和多余属性检测
 
@@ -1698,7 +1711,6 @@ interface B extends A {
 }
 ```
 
-
 ## 字面量类型
 
 文字类型是来自集体类型的单个元素集，它定义了一个非常精确的值，即 JavaScript 原始数据。
@@ -1764,7 +1776,6 @@ let o = {
     x: 'a' as X,
 };
 ```
-
 
 ## 严格空检查
 
@@ -4002,6 +4013,32 @@ type MyType = Capitalize<'abc'>; // "Abc"
 type MyType = Uncapitalize<'Abc'>; // "abc"
 ```
 
+#### NoInfer\<T\>
+
+NoInfer 是一种实用类型，旨在阻止泛型函数范围内类型的自动推断。
+
+示例：
+
+```typescript
+// 泛型函数范围内类型的自动推断。
+function fn<T extends string>(x: T[], y: T) {
+    return x.concat(y);
+}
+const r = fn(['a', 'b'], 'c'); // 此处的类型为 ("a" | "b" | "c")[]
+```
+
+使用 NoInfer：
+
+<!-- skip -->
+```typescript
+// 使用 NoInfer 阻止类型推断的示例函数
+function fn2<T extends string>(x: T[], y: NoInfer<T>) {
+  return x.concat(y);
+}
+
+const r2 = fn2(["a", "b"], "c"); // 错误：类型为“c”的类型参数不能分配给类型为“a”|“b”的参数。
+```
+
 ## 其他
 
 ### 错误和异常处理
@@ -4300,7 +4337,7 @@ async function* asyncNumbers(): AsyncIterableIterator<number> {
 })();
 ```
 
-### New.target
+### New target 元属性
 
 您可以在 TypeScript 中使用 `new.target` 元属性，该属性使您能够确定是否使用 new 运算符调用函数或构造函数。它允许您检测对象是否是由于构造函数调用而创建的。
 
@@ -4383,7 +4420,7 @@ const person: Person = {
 console.log(person.address?.city); // undefined
 ```
 
-### 空合并运算符 (??)
+### 空合并运算符
 
 如果 `??` 左侧是 `null` 或者 `undefined` ，则空合并运算符返回右侧值，否则，它返回左侧值。
 
@@ -4474,7 +4511,7 @@ type NestedArray = [1, [2, [3, 4], 5], 6];
 type FlattenedArray = Flatten<NestedArray>; // 2 | 3 | 4 | 5 | 1 | 6
 ```
 
-### Node.js 中的 ECMAScript 模块支持
+### Node 中的 ECMAScript 模块支持
 
 Node.js 从 15.3.0 版本开始添加了对 ECMAScript 模块的支持，而 TypeScript 从 4.7 版本开始增加了对 Node.js 的 ECMAScript 模块支持。可以通过将 `tsconfig.json` 文件中的`module`属性的值设置为 `nodenext` 来启用此支持。这是一个例子：
 
@@ -4912,3 +4949,21 @@ Connection closed.
 ```
 
 语句中允许使用"using"和"await using"声明："for"、"for-in"、"for-of"、"for-await-of"、"switch"。
+
+### 导入属性
+
+TypeScript 5.3 的导入属性（导入标签）告诉运行时如何处理模块（JSON 等）。这通过确保干净的导入来提高安全性，并与内容安全策略 (CSP) 保持一致，以实现更安全的资源加载。TypeScript 确保它们有效，但让运行时处理它们的解释以进行特定的模块处理。
+
+示例：
+
+<!-- skip -->
+```typescript
+import config from './config.json' with { type: 'json' };
+```
+
+使用动态导入：
+
+<!-- skip -->
+```typescript
+const config = import("./config.json", { with: { type: "json" } })
+```

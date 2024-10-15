@@ -12,20 +12,24 @@ If you found this TypeScript book valuable and wish to contribute, consider supp
 
 This book has been translated into several language versions, including:
 
-* [Chinese](https://github.com/gibbok/typescript-book/blob/main/README-zh_CN.md)
+[Chinese](https://github.com/gibbok/typescript-book/blob/main/README-zh_CN.md)
 
-## Downloads
+## Downloads and website
 
-You can also download the Epub version here:
+You can also download the Epub version:
 
 [https://github.com/gibbok/typescript-book/tree/main/downloads](https://github.com/gibbok/typescript-book/tree/main/downloads)
+
+An online version is available at:
+
+[https://gibbok.github.io/typescript-book](https://gibbok.github.io/typescript-book)
 
 ## Table of Contents
 
 <!-- markdownlint-disable MD004 -->
 - [The Concise TypeScript Book](#the-concise-typescript-book)
   - [Translations](#translations)
-  - [Downloads](#downloads)
+  - [Downloads and website](#downloads-and-website)
   - [Table of Contents](#table-of-contents)
   - [Introduction](#introduction)
   - [About the Author](#about-the-author)
@@ -38,7 +42,7 @@ You can also download the Epub version here:
   - [Getting Started With TypeScript](#getting-started-with-typescript)
     - [Installation](#installation)
     - [Configuration](#configuration)
-    - [TypeScript Configuration File ​​tsconfig.json](#typescript-configuration-file-tsconfigjson)
+    - [TypeScript Configuration File](#typescript-configuration-file)
       - [target](#target)
       - [lib](#lib)
       - [strict](#strict)
@@ -148,7 +152,7 @@ You can also download the Epub version here:
     - [Constructor](#constructor)
     - [Private and Protected Constructors](#private-and-protected-constructors)
     - [Access Modifiers](#access-modifiers)
-    - [Get \& Set](#get--set)
+    - [Get and Set](#get-and-set)
     - [Auto-Accessors in Classes](#auto-accessors-in-classes)
     - [this](#this)
     - [Parameter Properties](#parameter-properties)
@@ -198,6 +202,7 @@ You can also download the Epub version here:
       - [Lowercase\<T\>](#lowercaset)
       - [Capitalize\<T\>](#capitalizet)
       - [Uncapitalize\<T\>](#uncapitalizet)
+      - [NoInfer\<T\>](#noinfert)
   - [Others](#others)
     - [Errors and Exception Handling](#errors-and-exception-handling)
     - [Mixin classes](#mixin-classes)
@@ -209,18 +214,18 @@ You can also download the Epub version here:
     - [ES6 Modules](#es6-modules)
     - [ES7 Exponentiation Operator](#es7-exponentiation-operator)
     - [The for-await-of Statement](#the-for-await-of-statement)
-    - [New.target](#newtarget)
+    - [New target meta-property](#new-target-meta-property)
     - [Dynamic Import Expressions](#dynamic-import-expressions)
     - ["tsc –watch"](#tsc-watch)
-    - [Non-null Assertion Operator (Postfix !)](#non-null-assertion-operator-postfix-)
+    - [Non-null Assertion Operator](#non-null-assertion-operator)
     - [Defaulted declarations](#defaulted-declarations)
     - [Optional Chaining](#optional-chaining)
-    - [Nullish coalescing operator (??)](#nullish-coalescing-operator-)
+    - [Nullish coalescing operator](#nullish-coalescing-operator)
     - [Template Literal Types](#template-literal-types)
     - [Function overloading](#function-overloading)
     - [Recursive Types](#recursive-types)
     - [Recursive Conditional Types](#recursive-conditional-types)
-    - [ECMAScript Module Support in Node.js](#ecmascript-module-support-in-nodejs)
+    - [ECMAScript Module Support in Node](#ecmascript-module-support-in-node)
     - [Assertion Functions](#assertion-functions)
     - [Variadic Tuple Types](#variadic-tuple-types)
     - [Boxed types](#boxed-types)
@@ -231,7 +236,9 @@ You can also download the Epub version here:
     - [Type-Only Imports and Export](#type-only-imports-and-export)
     - [using declaration and Explicit Resource Management](#using-declaration-and-explicit-resource-management)
       - [await using declaration](#await-using-declaration)
+    - [Import Attributes](#import-attributes)
 <!-- markdownlint-enable MD004 -->
+
 ## Introduction
 
 Welcome to The Concise TypeScript Book! This guide equips you with essential knowledge and practical skills for effective TypeScript development. Discover key concepts and techniques to write clean, robust code. Whether you're a beginner or an experienced developer, this book serves as both a comprehensive guide and a handy reference for leveraging TypeScript's power in your projects.
@@ -246,7 +253,7 @@ You can reach Simone Poggiali on the following platforms:
 
 * LinkedIn: [https://www.linkedin.com/in/simone-poggiali](https://www.linkedin.com/in/simone-poggiali)
 * GitHub: [https://github.com/gibbok](https://github.com/gibbok)
-* Twitter: [https://twitter.com/gibbok_coding](https://twitter.com/gibbok_coding)
+* X.com: [https://x.com/gibbok_coding](https://x.com/gibbok_coding)
 * Email: gibbok.coding📧gmail.com
 
 ## TypeScript Introduction
@@ -255,7 +262,7 @@ You can reach Simone Poggiali on the following platforms:
 
 TypeScript is a strongly typed programming language that builds on JavaScript. It was originally designed by Anders Hejlsberg in 2012 and is currently developed and maintained by Microsoft as an open source project.
 
-TypeScript compiles to JavaScript and can be executed in any JavaScript engine (e.g., a browser or server Node.js).
+TypeScript compiles to JavaScript and can be executed in any JavaScript runtime (e.g., a browser or server Node.js).
 
 TypeScript supports multiple programming paradigms such as functional, generic, imperative, and object-oriented. TypeScript is neither an interpreted nor a compiled language.
 
@@ -288,7 +295,7 @@ For instance, consider a function in a JavaScript file with the `.js` extension,
 const sum = (a, b) => a + b;
 ```
 
-The function can be converted and used in TypeScript by changing the file extension to `.ts`. However, if the same function is annotated with TypeScript types, it cannot be executed in any JavaScript engine without compilation. The following TypeScript code will produce a syntax error if it is not compiled:
+The function can be converted and used in TypeScript by changing the file extension to `.ts`. However, if the same function is annotated with TypeScript types, it cannot be executed in any JavaScript runtime without compilation. The following TypeScript code will produce a syntax error if it is not compiled:
 
 <!-- skip -->
 ```typescript
@@ -332,7 +339,7 @@ This error occurs because TypeScript strictly enforces type compatibility, and i
 
 ### TypeScript Code Generation
 
-The TypeScript compiler has two main responsibilities: checking for type errors and compiling to JavaScript. These two processes are independent of each other. Types do not affect the execution of the code in a JavaScript engine, as they are completely erased during compilation. TypeScript can still output JavaScript even in the presence of type errors.
+The TypeScript compiler has two main responsibilities: checking for type errors and compiling to JavaScript. These two processes are independent of each other. Types do not affect the execution of the code in a JavaScript runtime, as they are completely erased during compilation. TypeScript can still output JavaScript even in the presence of type errors.
 Here is an example of TypeScript code with a type error:
 
 <!-- skip -->
@@ -534,7 +541,7 @@ tsc src/*.ts // Compile any .ts files under the 'src' folder to JavaScript
 tsc app.ts util.ts --outfile index.js // Compile two TypeScript files (app.ts and util.ts) into a single JavaScript file (index.js)
 ```
 
-### TypeScript Configuration File ​​tsconfig.json
+### TypeScript Configuration File
 
 A tsconfig.json file is used to configure the TypeScript Compiler (tsc). Usually, it is added to the root of the project, together with the `package.json` file.
 
@@ -1137,6 +1144,8 @@ For your defined Ambient Declarations, you can import using the "triple-slash" r
 ```
 
 You can use Ambient Declarations even within JavaScript files using `// @ts-check`.
+
+The `declare` keyword enables type definitions for existing JavaScript code without importing it, serving as a placeholder for types from another file or globally.
 
 ### Property Checking and Excess Property Checking
 
@@ -3002,7 +3011,7 @@ The `protected` modifier allows access to the class member within the containing
 
 The `public` modifier provides unrestricted access to the class member, allowing it to be accessed from anywhere."
 
-### Get & Set
+### Get and Set
 
 Getters and setters are special methods that allow you to define custom access and modification behavior for class properties. They enable you to encapsulate the internal state of an object and provide additional logic when getting or setting the values of properties.
 In TypeScript, getters and setters are defined using the `get` and `set` keywords respectively. Here's an example:
@@ -4037,6 +4046,32 @@ Uncapitalize the name of the input type T.
 type MyType = Uncapitalize<'Abc'>; // "abc"
 ```
 
+#### NoInfer\<T\>
+
+NoInfer is a utility type designed to block the automatic inference of types within the scope of a generic function.
+
+Example:
+
+```typescript
+// Automatic inference of types within the scope of a generic function.
+function fn<T extends string>(x: T[], y: T) {
+    return x.concat(y);
+}
+const r = fn(['a', 'b'], 'c'); // Type here is ("a" | "b" | "c")[]
+```
+
+With NoInfer:
+
+<!-- skip -->
+```typescript
+// Example function that uses NoInfer to prevent type inference
+function fn2<T extends string>(x: T[], y: NoInfer<T>) {
+    return x.concat(y);
+}
+
+const r2 = fn2(['a', 'b'], 'c'); // Error: Type Argument of type '"c"' is not assignable to parameter of type '"a" | "b"'.
+```
+
 ## Others
 
 ### Errors and Exception Handling
@@ -4337,7 +4372,7 @@ async function* asyncNumbers(): AsyncIterableIterator<number> {
 })();
 ```
 
-### New.target
+### New target meta-property
 
 You can use in TypeScript the `new.target` meta-property which enables you to determine if a function or constructor was invoked using the new operator. It allows you to detect whether an object was created as a result of a constructor call.
 
@@ -4387,7 +4422,7 @@ tsc --watch
 
 Starting from TypeScript version 4.9, file monitoring primarily relies on file system events, automatically resorting to polling if an event-based watcher cannot be established.
 
-### Non-null Assertion Operator (Postfix !)
+### Non-null Assertion Operator
 
 The Non-null Assertion Operator (Postfix !) also called Definite Assignment Assertions is a TypeScript feature that allows you to assert that a variable or property is not null or undefined, even if TypeScript's static type analysis suggests that it might be. With this feature it is possible to remove any explicit checking.
 
@@ -4434,7 +4469,7 @@ const person: Person = {
 console.log(person.address?.city); // undefined
 ```
 
-### Nullish coalescing operator (??)
+### Nullish coalescing operator
 
 The nullish coalescing operator `??` returns the right-hand side value if the left-hand side is `null` or `undefined`; otherwise, it returns the left-hand side value.
 
@@ -4527,7 +4562,7 @@ type NestedArray = [1, [2, [3, 4], 5], 6];
 type FlattenedArray = Flatten<NestedArray>; // 2 | 3 | 4 | 5 | 1 | 6
 ```
 
-### ECMAScript Module Support in Node.js
+### ECMAScript Module Support in Node
 
 Node.js added support for ECMAScript Modules starting from version 15.3.0, and TypeScript has had ECMAScript Module Support for Node.js since version 4.7. This support can be enabled by using the `module` property with the value `nodenext` in the tsconfig.json file. Here's an example:
 
@@ -4965,3 +5000,21 @@ Connection closed.
 ```
 
 The `using` and `await using` declarations are allowed in Statements: `for`, `for-in`, `for-of`, `for-await-of`, `switch`.
+
+### Import Attributes
+
+TypeScript 5.3's Import Attributes (labels for imports) tell the runtime how to handle modules (JSON, etc.). This improves security by ensuring clear imports and aligns with Content Security Policy (CSP) for safer resource loading. TypeScript ensures they are valid but lets the runtime handle their interpretation for specific module handling.
+
+Example:
+
+<!-- skip -->
+```typescript
+import config from './config.json' with { type: 'json' };
+```
+
+with dynamic import:
+
+<!-- skip -->
+```typescript
+const config = import('./config.json', { with: { type: 'json' } });
+```
